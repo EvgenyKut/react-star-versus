@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-star-versus/static/css/main.92dca8b3.chunk.css",
-    "main.js": "/react-star-versus/static/js/main.d7c6bfd1.chunk.js",
-    "main.js.map": "/react-star-versus/static/js/main.d7c6bfd1.chunk.js.map",
+    "main.js": "/react-star-versus/static/js/main.33798f2e.chunk.js",
+    "main.js.map": "/react-star-versus/static/js/main.33798f2e.chunk.js.map",
     "runtime-main.js": "/react-star-versus/static/js/runtime-main.aadcb4aa.js",
     "runtime-main.js.map": "/react-star-versus/static/js/runtime-main.aadcb4aa.js.map",
     "static/js/2.12f64733.chunk.js": "/react-star-versus/static/js/2.12f64733.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.aadcb4aa.js",
     "static/js/2.12f64733.chunk.js",
     "static/css/main.92dca8b3.chunk.css",
-    "static/js/main.d7c6bfd1.chunk.js"
+    "static/js/main.33798f2e.chunk.js"
   ]
 }
