@@ -1,0 +1,39 @@
+.welcomeArea {
+  margin: 2rem 1rem;
+  padding: 2rem;
+  background-color: #303030;
+  border: 3px solid #444;
+  border-radius: 5px;
+  min-height: 400px;
+}
+@font-face {
+  font-family: "StarWars";
+  src: url("../fonts/SF\ Distant\ Galaxy\ Outline.ttf");
+}
+
+@font-face {
+  font-family: "StarWarsBtn";
+  src: url("../fonts/SF\ Distant\ Galaxy.ttf");
+}
+
+.welcomeText {
+  font-family: "StarWars";
+  font-style: normal;
+  color: #ffd700;
+  font-size: 39px;
+}
+
+.btn-warning {
+  color: black;
+  padding: 0 10%;
+}
+
+.goBtn {
+  font-family: "StarWarsBtn";
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.StartBtn {
+  font-size: 63px;
+}

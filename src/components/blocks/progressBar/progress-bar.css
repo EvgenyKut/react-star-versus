@@ -1,0 +1,10 @@
+.logoBar {
+  font-size: 2rem;
+  font-family: "StarWars";
+  font-style: normal;
+  color: #ffd700;
+}
+
+.bar {
+  padding-bottom: 1rem;
+}

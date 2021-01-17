@@ -1,0 +1,47 @@
+body {
+  overflow-x: hidden;
+}
+
+.upBar {
+  margin-bottom: 2rem;
+}
+
+.battleL {
+  padding-left: 5%;
+}
+.battleR {
+  padding-right: 5%;
+}
+
+.starWarsBar {
+  font-size: 1.5rem;
+  font-family: "StarWars";
+  font-style: normal;
+  color: #ffd700;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.BarsHeader {
+  min-width: 70%;
+  max-width: 80%;
+}
+.goBtn2 {
+  min-width: 30%;
+  max-width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0.5rem;
+}
+
+.fightBtn {
+  font-family: "StarWarsBtn";
+  text-align: center;
+  margin-top: 17%;
+  font-size: 63px;
+}
