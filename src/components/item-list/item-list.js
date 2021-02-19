@@ -12,9 +12,9 @@ export default class ItemList extends Component {
   renderItems = (arr) => {
     const { onItemSelected, onSelect, activeItemsList } = this.props;
     return arr.map(({ name, id }) => {
-      activeItemsList.includes(id)
-        ? (clazz = "list-group-item important")
-        : (clazz = "list-group-item");
+      clazz = activeItemsList.includes(id)
+        ? "list-group-item important"
+        : "list-group-item";
 
       return (
         <li className={clazz} key={id} onClick={() => onItemSelected(id)}>

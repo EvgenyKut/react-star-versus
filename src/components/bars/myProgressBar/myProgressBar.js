@@ -1,8 +1,8 @@
 import React from "react";
 import { ProgressBar } from "react-bootstrap";
-import "./progress-bar.css";
+import "./myProgressBar.css";
 
-const MyProgressBar = ({ logo, value, dimension, variant, max, clazz }) => {
+const myProgressBar = ({ logo, value, dimension, variant, max, clazz }) => {
   return (
     <div>
       <span className="logoBar">{logo}</span>
@@ -19,4 +19,4 @@ const MyProgressBar = ({ logo, value, dimension, variant, max, clazz }) => {
     </div>
   );
 };
-export default MyProgressBar;
+export default myProgressBar;

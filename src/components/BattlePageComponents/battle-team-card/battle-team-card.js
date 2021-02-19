@@ -1,26 +1,27 @@
 import React, { Component } from "react";
-import MyProgressBar from "../../blocks/progressBar";
-import BattleShipDetails from "../../sw-components/battle-ship-details";
-import BattlePersonDetails from "../../sw-components/battle-person-details";
+import MyProgressBar from "../../Bars/myProgressBar";
+import { BattleItemsDetails } from "../../Sw-components";
 
 export default class BattleTeamCard extends Component {
   render() {
-    const { health, attack, teamList, shipId, team } = this.props;
-    let items = teamList.map((element) => {
-      return <BattlePersonDetails personId={element} key={element} />;
+    const { health, attack, teamList, itemId, team } = this.props;
+    const items = teamList.map((element) => {
+      return (
+        <BattleItemsDetails itemId={element} key={element} item={"person"} />
+      );
     });
 
-    let upperTeam = team.toUpperCase();
+    const upperTeam = team.toUpperCase();
 
     return (
-      <div className="col-md-5">
+      <div className="col-md-5 height">
         <div className="header">
           <h1>{upperTeam} TEAM</h1>
         </div>
         <div className="battleArea">
           <div className="headBlock">
             {" "}
-            <BattleShipDetails shipId={shipId} />
+            <BattleItemsDetails itemId={itemId} item={"ship"} />
             <div className="bars">
               <MyProgressBar
                 value={health}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./item-details.css";
 import SwapiService from "../../services/swapi-service";
-import Spinner from "../blocks/spinner";
+import Spinner from "../Modules/spinner";
 import { ProgressBar } from "react-bootstrap";
 
 const Record = ({ item, field, label }) => {
@@ -59,20 +59,20 @@ export default class ItemDetails extends Component {
             <span className="starWarsSpan">Health</span>
             <ProgressBar
               animated
-              now={mass}
+              now={length}
               striped
               variant="success"
-              max={100}
-              label={`${mass} hp`}
+              max={200}
+              label={`${length} hp`}
             />
             <span className="starWarsSpan">Attack</span>
             <ProgressBar
               animated
-              now={length}
+              now={mass}
               striped
-              max={200}
+              max={110}
               variant="danger"
-              label={`${length} damage`}
+              label={`${mass} damage`}
             />
           </div>
         </div>

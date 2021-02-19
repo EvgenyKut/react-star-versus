@@ -8,3 +8,9 @@
 .bar {
   padding-bottom: 1rem;
 }
+
+@media (max-width: 840px) {
+  .logoBar {
+    font-size: 1.5rem;
+  }
+}

@@ -1,24 +1,26 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "./app.css";
 import SwapiService from "../../services/swapi-service";
-import { SwapiServiceProvider } from "../swapi-service-context";
-import { Button } from "react-bootstrap";
-import MyProgressBar from "../blocks/progressBar";
-import { WelcomePage, PeoplePage, StarshipsPage, BattlePage } from "../Pages";
-import ErrorIndicator from "../blocks/error-indicator";
+import { SwapiServiceProvider } from "../Swapi-service-context";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+
+import ErrorIndicator from "../Modules/error-indicator";
 import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+  WelcomePage,
+  PeoplePage,
+  StarshipsPage,
+  BattlePage,
+  MainPage,
+} from "../Pages";
 
 export default class App extends Component {
   swapiService = new SwapiService();
 
-  maxId = 100;
   state = {
+    mass: 0,
+    health: 0,
+    attack: 0,
+    length: 0,
     selectedPerson: 1,
     selectedStarship: 10,
     soldiersList: [],
@@ -27,52 +29,16 @@ export default class App extends Component {
     starshipsList: null,
     score: 3,
     scoreShips: 1,
-    person: {},
-    names: {},
-    healthArr: [],
-    healthObj: {},
-    massObj: {},
-    massArr: [],
-    lengthArr: [],
-    lengthObj: {},
-    attackObj: {},
-    attackArr: [],
-    health: 0,
-    attack: 0,
-    mass: 0,
-    length: 0,
     hasError: false,
   };
 
   componentDidMount() {
     this.swapiService.getAllPeople().then((personList) => {
-      let newPersonList = [...personList];
-      let obj1 = {};
-      let obj2 = {};
-      let names = {};
-      newPersonList.forEach((item) => {
-        obj1[item.id] = item.length;
-      });
-      newPersonList.forEach((item) => {
-        obj2[item.id] = item.mass;
-      });
-      newPersonList.forEach((item) => {
-        names[item.id] = item.name;
-      });
-      this.setState({ personList, healthObj: obj1, attackObj: obj2, names });
+      this.setState({ personList });
     });
 
     this.swapiService.getAllStarships().then((starshipsList) => {
-      let newStarshipsList = [...starshipsList];
-      let obj3 = {};
-      let obj4 = {};
-      newStarshipsList.forEach((item) => {
-        obj3[item.id] = item.mass;
-      });
-      newStarshipsList.forEach((item) => {
-        obj4[item.id] = item.length;
-      });
-      this.setState({ starshipsList, massObj: obj3, lengthObj: obj4 });
+      this.setState({ starshipsList });
     });
   }
 
@@ -83,126 +49,80 @@ export default class App extends Component {
   onStarshipSelected = (id) => {
     this.setState({ selectedStarship: id });
   };
-  onSelect = (id, soldiersList) => {
-    this.setState(
-      ({
-        soldiersList,
-        score,
-        health,
-        personList,
-        healthObj,
-        healthArr,
-        attackObj,
-        attackArr,
-        attack,
-      }) => {
-        if (!soldiersList.includes(id)) {
-          let newScore = score;
-          let newArr = [...soldiersList, id];
-          newScore--;
-          if (newArr.length > 3) {
-            newArr = newArr.slice(1);
-            newScore = 0;
-          }
-          let newHealthArr = [...healthArr];
-          newArr.forEach((item) => {
-            if (!newHealthArr.includes(healthObj[item])) {
-              newHealthArr.push(healthObj[item]);
-              if (newHealthArr.length > 3) {
-                newHealthArr = newHealthArr.slice(1);
-              }
-            }
-          });
-          let newHealth = health;
-          newHealth = newHealthArr.reduce((result, item) => {
-            return (result += +item);
-          }, 0);
 
-          let newAttackArr = [...attackArr];
-          newArr.forEach((item) => {
-            if (!newAttackArr.includes(attackObj[item])) {
-              newAttackArr.push(attackObj[item]);
-              if (newAttackArr.length > 3) {
-                newAttackArr = newAttackArr.slice(1);
-              }
-            }
-          });
-          let newAttack = attack;
-          newAttack = newAttackArr.reduce((result, item) => {
-            return (result += +item);
-          }, 0);
+  onParamUp = (param, allList, activeList) => {
+    const skill = allList
+      .map((item) => {
+        return activeList.includes(item.id) ? item[param] : null;
+      })
+      .reduce((res, item) => {
+        return (res += +item);
+      }, 0);
+    return skill;
+  };
 
-          return {
-            soldiersList: newArr,
-            score: newScore,
-            healthArr: newHealthArr,
-            health: newHealth,
-            attack: newAttack,
-          };
-        }
+  onUpdate = (activeList, allItemsList, health, attack, id, score, max) => {
+    if (!activeList.includes(id)) {
+      let newArr = [...activeList, id];
+      let newScore = score;
+      newScore--;
+      if (newArr.length > max) {
+        newArr = newArr.slice(1);
+        newScore = 0;
       }
-    );
+      let newAttack = attack;
+      newAttack = this.onParamUp("mass", allItemsList, newArr);
+      let newHealth = health;
+      newHealth = this.onParamUp("length", allItemsList, newArr);
+      return { newAttack, newHealth, newArr, newScore };
+    }
+  };
+
+  onSelect = (id) => {
+    const max = 3;
+    this.setState(({ soldiersList, score, health, personList, attack }) => {
+      if (!soldiersList.includes(id)) {
+        const { newAttack, newHealth, newArr, newScore } = this.onUpdate(
+          soldiersList,
+          personList,
+          health,
+          attack,
+          id,
+          score,
+          max
+        );
+        return {
+          soldiersList: newArr,
+          score: newScore,
+          health: newHealth,
+          attack: newAttack,
+        };
+      }
+    });
   };
 
   onShipSelect = (id) => {
-    this.setState(
-      ({
-        shipsList,
-        scoreShips,
-        mass,
-        personList,
-        massObj,
-        massArr,
-        lengthObj,
-        lengthArr,
-        length,
-      }) => {
-        if (!shipsList.includes(id)) {
-          let newScore = scoreShips;
-          let newArr = [...shipsList, id];
-          newScore--;
-          if (newArr.length > 1) {
-            newArr = newArr.slice(1);
-            newScore = 0;
-          }
-          let newMassArr = [...massArr];
-          newArr.forEach((item) => {
-            if (!newMassArr.includes(massObj[item])) {
-              newMassArr.push(massObj[item]);
-              if (newMassArr.length > 1) {
-                newMassArr = newMassArr.slice(1);
-              }
-            }
-          });
-          let newMass = mass;
-          newMass = newMassArr.reduce((result, item) => {
-            return (result += +item);
-          }, 0);
+    this.setState(({ starshipsList, shipsList, scoreShips, mass, length }) => {
+      const max = 1;
+      if (!shipsList.includes(id)) {
+        const { newAttack, newHealth, newArr, newScore } = this.onUpdate(
+          shipsList,
+          starshipsList,
+          mass,
+          length,
+          id,
+          scoreShips,
+          max
+        );
 
-          let newLengthArr = [...lengthArr];
-          newArr.forEach((item) => {
-            if (!newLengthArr.includes(lengthObj[item])) {
-              newLengthArr.push(lengthObj[item]);
-              if (newLengthArr.length > 1) {
-                newLengthArr = newLengthArr.slice(1);
-              }
-            }
-          });
-          let newLength = length;
-          newLength = newLengthArr.reduce((result, item) => {
-            return (result += +item);
-          }, 0);
-
-          return {
-            shipsList: newArr,
-            scoreShips: newScore,
-            massArr: newMassArr,
-            mass: newMass,
-            length: newLength,
-          };
-        }
+        return {
+          shipsList: newArr,
+          scoreShips: newScore,
+          mass: newAttack,
+          length: newHealth,
+        };
       }
-    );
+    });
   };
 
   componentDidCatch() {
@@ -211,30 +131,33 @@ export default class App extends Component {
 
   render() {
     const {
+      mass,
       attack,
       health,
-      soldiersList,
-      hasError,
-      score,
-      selectedPerson,
-      shipsList,
-      mass,
       length,
+      soldiersList,
+      shipsList,
+      score,
       scoreShips,
+      selectedPerson,
       selectedStarship,
+      hasError,
     } = this.state;
+
+    const btnStatus = score === 0 && scoreShips === 0 ? false : true;
+    const titleStatus = btnStatus ? "Choose team and ship!" : null;
 
     if (hasError) {
       return <ErrorIndicator />;
     }
 
-    const BattleFrontItem = (
-      <BattlePage
-        attack={attack + length}
-        health={health + mass}
-        shipId={shipsList}
-        teamList={soldiersList}
-        names={this.state.names}
+    const PeoplePageItem = (
+      <PeoplePage
+        onPersonSelected={this.onPersonSelected}
+        onSelect={this.onSelect}
+        soldiersList={soldiersList}
+        itemId={selectedPerson}
+        score={score}
       />
     );
 
@@ -248,73 +171,35 @@ export default class App extends Component {
       />
     );
 
-    const PeoplePageItem = (
-      <PeoplePage
-        onPersonSelected={this.onPersonSelected}
-        onSelect={this.onSelect}
-        soldiersList={soldiersList}
-        itemId={selectedPerson}
-        score={score}
+    const BattleFrontItem = (
+      <BattlePage
+        attack={attack + length}
+        health={health + mass}
+        shipId={shipsList}
+        teamList={soldiersList}
+        names={this.state.names}
       />
     );
-    const btnStatus =
-      soldiersList.length >= 3 && shipsList.length >= 1 ? false : true;
-    const titleStatus = btnStatus ? "Choose team and ship!" : null;
-    const ChoosePage = (
-      <Fragment>
-        <div className="row mb2">
-          <div className="col-md-1"></div>
-          <div className="col-md-10">
-            <div className="Header">
-              <div className="BarsHeader">
-                <MyProgressBar
-                  value={health + mass}
-                  logo={"Health"}
-                  dimension={"hp"}
-                  variant={"success"}
-                  max={600}
-                />
-                <MyProgressBar
-                  value={attack + length}
-                  logo={"Attack"}
-                  dimension={"damage"}
-                  variant={"danger"}
-                  max={300}
-                />
-              </div>
 
-              <div className="goBtn2">
-                <div title={titleStatus}>
-                  <Link to="/battle" className="link">
-                    <Button
-                      className="fightBtn"
-                      variant="warning"
-                      size="lg"
-                      disabled={btnStatus}
-                    >
-                      Fight!
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="row mb2">{PeoplePageItem}</div>
-        </div>
-        <div className="row mb2">{StarshipsPageItem}</div>
-      </Fragment>
+    const MainPageItem = (
+      <MainPage
+        attack={attack + mass}
+        health={health + length}
+        titleStatus={titleStatus}
+        btnStatus={btnStatus}
+        StarshipsPageItem={StarshipsPageItem}
+        PeoplePageItem={PeoplePageItem}
+      />
     );
 
     return (
       <SwapiServiceProvider value={this.swapiService}>
-        <Router>
+        <BrowserRouter>
           <Switch>
             <Route path="/" component={WelcomePage} exact />
             <Route
               path="/Chose_a_team"
-              render={() => <div>{ChoosePage}</div>}
+              render={() => <div>{MainPageItem}</div>}
               exact
             />
             <Route
@@ -324,7 +209,7 @@ export default class App extends Component {
             />
             <Redirect to="/" />
           </Switch>
-        </Router>
+        </BrowserRouter>
       </SwapiServiceProvider>
     );
   }

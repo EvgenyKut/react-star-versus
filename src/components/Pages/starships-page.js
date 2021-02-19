@@ -1,25 +1,25 @@
 import React, { Component, Fragment } from "react";
-import ScoreBar from "../bars/score-bar";
-import { StarshipList, StarshipDetails } from "../sw-components";
+import ScoreBar from "../Bars/score-bar";
+import { StarshipList, StarshipDetails } from "../Sw-components";
 
 export default class StarshipsPage extends Component {
   state = { label: "Starship", selectedItems: [5, 10, 12, 13, 11] };
   render() {
     const {
-      onShipSelect,
-      onStarshipSelected,
+      itemId,
       shipsList,
       scoreShips,
-      itemId,
+      onShipSelect,
+      onStarshipSelected,
     } = this.props;
 
     return (
       <Fragment>
         <div className="col-md-5">
           <StarshipList
-            onItemSelected={onStarshipSelected}
             onSelect={onShipSelect}
             activeItemsList={shipsList}
+            onItemSelected={onStarshipSelected}
             selectedItems={this.state.selectedItems}
           />
         </div>
@@ -27,7 +27,7 @@ export default class StarshipsPage extends Component {
           <ScoreBar score={scoreShips} label={this.state.label} />
         </div>
         <div className="col-md-5">
-          <StarshipDetails itemId={itemId}></StarshipDetails>
+          <StarshipDetails itemId={itemId} item={"Starship"}></StarshipDetails>
         </div>
       </Fragment>
     );

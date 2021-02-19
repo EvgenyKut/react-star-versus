@@ -1,19 +1,18 @@
 import React from "react";
-
-import ItemDetails from "../item-details";
-import { Record } from "../item-details/item-details";
-import { withSwapiService } from "../hoc-helpers";
+import ItemDetails from "../Item-details";
+import { withSwapiService } from "../HOC-helpers";
+import { Record } from "../Item-details/item-details";
 
 const StarshipDetails = ({ itemId, swapiService }) => {
   const { getStarshipImage, getStarship } = swapiService;
   return (
     <ItemDetails
       itemId={itemId}
-      getImageUrl={getStarshipImage}
       getDataItem={getStarship}
+      getImageUrl={getStarshipImage}
     >
-      <Record field="hyperdrive" label="Hyperdrive Rating" />
-      <Record field="class" label="Class" />
+      <Record field="hyperdrive" label="Hyperdrive Rating: " />
+      <Record field="class" label="Class: " />
     </ItemDetails>
   );
 };

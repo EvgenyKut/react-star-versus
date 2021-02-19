@@ -1,19 +1,19 @@
 import React from "react";
 
-import ItemDetails from "../item-details";
-import { Record } from "../item-details/item-details";
-import { withSwapiService } from "../hoc-helpers";
+import ItemDetails from "../Item-details";
+import { withSwapiService } from "../HOC-helpers";
+import { Record } from "../Item-details/item-details";
 
 const PersonDetails = ({ itemId, swapiService }) => {
   const { getPersonImage, getPerson } = swapiService;
   return (
     <ItemDetails
       itemId={itemId}
-      getImageUrl={getPersonImage}
       getDataItem={getPerson}
+      getImageUrl={getPersonImage}
     >
-      <Record field="birth" label="Birth" />
-      <Record field="length" label="Height" />
+      <Record field="birth" label="Birth: " />
+      <Record field="length" label="Height:" />
     </ItemDetails>
   );
 };

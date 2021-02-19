@@ -1,26 +1,21 @@
 import React, { Component } from "react";
+import Spinner from "../../Modules/spinner";
 import "./photo-box.css";
-import Spinner from "../../blocks/spinner";
 
 export default class PhotoBox extends Component {
   state = { item: {}, loading: true, image: null };
 
   componentDidMount() {
-    this.updateItem();
+    this.mountItem();
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.shipId !== prevProps.shipId) {
-      this.setState({ loading: true });
-      this.updateItem();
-    }
-  }
-  updateItem() {
-    const { shipId, getImageUrl, getDataItem } = this.props;
-    if (!shipId) {
+
+  mountItem() {
+    const { itemId, getImageUrl, getDataItem } = this.props;
+    if (!itemId) {
       return;
     }
 
-    getDataItem(shipId).then((item) => {
+    getDataItem(itemId).then((item) => {
       this.setState({ item, loading: false, image: getImageUrl(item) });
     });
   }

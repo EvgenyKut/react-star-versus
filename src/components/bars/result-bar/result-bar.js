@@ -3,7 +3,7 @@ import "./result-bar.css";
 export default class ScoreBar extends Component {
   render() {
     let { result, scores } = this.props;
-    let team = result === 1 ? "REBEL" : "EMPIRE";
+    const team = result === 1 ? "REBEL" : "EMPIRE";
     if (result === 0) {
       scores = scores * -1;
     }

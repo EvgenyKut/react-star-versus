@@ -6,13 +6,6 @@ body {
   margin-bottom: 2rem;
 }
 
-.battleL {
-  padding-left: 5%;
-}
-.battleR {
-  padding-right: 5%;
-}
-
 .starWarsBar {
   font-size: 1.5rem;
   font-family: "StarWars";
@@ -44,4 +37,10 @@ body {
   text-align: center;
   margin-top: 17%;
   font-size: 63px;
+}
+
+@media (max-width: 840px) {
+  .fightBtn {
+    font-size: 40px;
+  }
 }

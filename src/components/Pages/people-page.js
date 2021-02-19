@@ -1,25 +1,25 @@
 import React, { Component, Fragment } from "react";
 
-import ScoreBar from "../bars/score-bar";
-import { PersonList, PersonDetails } from "../sw-components";
+import ScoreBar from "../Bars/score-bar";
+import { PersonList, PersonDetails } from "../Sw-components";
 
 export default class PeoplePage extends Component {
   state = { label: "soldiers", selectedItems: [1, 2, 3, 5, 9] };
   render() {
     const {
-      onSelect,
-      onPersonSelected,
-      soldiersList,
       score,
       itemId,
+      onSelect,
+      soldiersList,
+      onPersonSelected,
     } = this.props;
     return (
       <Fragment>
         <div className="col-md-5">
           <PersonList
-            onItemSelected={onPersonSelected}
             onSelect={onSelect}
             activeItemsList={soldiersList}
+            onItemSelected={onPersonSelected}
             selectedItems={this.state.selectedItems}
           />
         </div>

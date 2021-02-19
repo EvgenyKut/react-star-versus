@@ -8,12 +8,12 @@
 }
 @font-face {
   font-family: "StarWars";
-  src: url("../fonts/SF\ Distant\ Galaxy\ Outline.ttf");
+  src: url("../../fonts/SF\ Distant\ Galaxy\ Outline.ttf");
 }
 
 @font-face {
   font-family: "StarWarsBtn";
-  src: url("../fonts/SF\ Distant\ Galaxy.ttf");
+  src: url("../../fonts/SF\ Distant\ Galaxy.ttf");
 }
 
 .welcomeText {
@@ -36,4 +36,16 @@
 
 .StartBtn {
   font-size: 63px;
+}
+
+@media (max-width: 840px) {
+  .welcomeText {
+    font-size: 18px;
+  }
+  .StartBtn {
+    font-size: 20px;
+  }
+  .welcomeArea {
+    min-height: 200px;
+  }
 }
