@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/react-star-versus/static/css/main.9a74184f.chunk.css",
-    "main.js": "/react-star-versus/static/js/main.56ac46ab.chunk.js",
-    "main.js.map": "/react-star-versus/static/js/main.56ac46ab.chunk.js.map",
+    "main.css": "/react-star-versus/static/css/main.cf08685f.chunk.css",
+    "main.js": "/react-star-versus/static/js/main.e455b489.chunk.js",
+    "main.js.map": "/react-star-versus/static/js/main.e455b489.chunk.js.map",
     "runtime-main.js": "/react-star-versus/static/js/runtime-main.aadcb4aa.js",
     "runtime-main.js.map": "/react-star-versus/static/js/runtime-main.aadcb4aa.js.map",
     "static/js/2.ffb3f19a.chunk.js": "/react-star-versus/static/js/2.ffb3f19a.chunk.js",
     "static/js/2.ffb3f19a.chunk.js.map": "/react-star-versus/static/js/2.ffb3f19a.chunk.js.map",
     "index.html": "/react-star-versus/index.html",
-    "static/css/main.9a74184f.chunk.css.map": "/react-star-versus/static/css/main.9a74184f.chunk.css.map",
+    "static/css/main.cf08685f.chunk.css.map": "/react-star-versus/static/css/main.cf08685f.chunk.css.map",
     "static/js/2.ffb3f19a.chunk.js.LICENSE.txt": "/react-star-versus/static/js/2.ffb3f19a.chunk.js.LICENSE.txt",
     "static/media/welcomePage.css": "/react-star-versus/static/media/SF Distant Galaxy.83f362a4.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.aadcb4aa.js",
     "static/js/2.ffb3f19a.chunk.js",
-    "static/css/main.9a74184f.chunk.css",
-    "static/js/main.56ac46ab.chunk.js"
+    "static/css/main.cf08685f.chunk.css",
+    "static/js/main.e455b489.chunk.js"
   ]
 }
