@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import "./app.css";
+import "./App.css";
 import SwapiService from "../../services/swapi-service";
-import { SwapiServiceProvider } from "../Swapi-service-context";
+import { SwapiServiceProvider } from "../../SwapiServiceContext";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import onUpdate from "../../Functions";
+import ErrorIndicator from "../ErrorIndicator";
 
-import ErrorIndicator from "../Modules/error-indicator";
 import {
   WelcomePage,
   PeoplePage,
@@ -12,6 +13,8 @@ import {
   BattlePage,
   MainPage,
 } from "../Pages";
+const maxSoldiers = 3;
+const maxShips = 1;
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -50,78 +53,51 @@ export default class App extends Component {
     this.setState({ selectedStarship: id });
   };
 
-  onParamUp = (param, allList, activeList) => {
-    const skill = allList
-      .map((item) => {
-        return activeList.includes(item.id) ? item[param] : null;
-      })
-      .reduce((res, item) => {
-        return (res += +item);
-      }, 0);
-    return skill;
-  };
-
-  onUpdate = (activeList, allItemsList, health, attack, id, score, max) => {
-    if (!activeList.includes(id)) {
-      let newArr = [...activeList, id];
-      let newScore = score;
-      newScore--;
-      if (newArr.length > max) {
-        newArr = newArr.slice(1);
-        newScore = 0;
-      }
-      let newAttack = attack;
-      newAttack = this.onParamUp("mass", allItemsList, newArr);
-      let newHealth = health;
-      newHealth = this.onParamUp("length", allItemsList, newArr);
-      return { newAttack, newHealth, newArr, newScore };
-    }
-  };
-
   onSelect = (id) => {
-    const max = 3;
     this.setState(({ soldiersList, score, health, personList, attack }) => {
-      if (!soldiersList.includes(id)) {
-        const { newAttack, newHealth, newArr, newScore } = this.onUpdate(
-          soldiersList,
-          personList,
-          health,
-          attack,
-          id,
-          score,
-          max
-        );
-        return {
-          soldiersList: newArr,
-          score: newScore,
-          health: newHealth,
-          attack: newAttack,
-        };
+      if (soldiersList.includes(id)) {
+        return;
       }
+
+      const { newAttack, newHealth, newArr, newScore } = onUpdate(
+        soldiersList,
+        personList,
+        health,
+        attack,
+        id,
+        score,
+        maxSoldiers
+      );
+      return {
+        soldiersList: newArr,
+        score: newScore,
+        health: newHealth,
+        attack: newAttack,
+      };
     });
   };
 
   onShipSelect = (id) => {
     this.setState(({ starshipsList, shipsList, scoreShips, mass, length }) => {
-      const max = 1;
-      if (!shipsList.includes(id)) {
-        const { newAttack, newHealth, newArr, newScore } = this.onUpdate(
-          shipsList,
-          starshipsList,
-          mass,
-          length,
-          id,
-          scoreShips,
-          max
-        );
-
-        return {
-          shipsList: newArr,
-          scoreShips: newScore,
-          mass: newAttack,
-          length: newHealth,
-        };
+      if (shipsList.includes(id)) {
+        return;
       }
+      const { newAttack, newHealth, newArr, newScore } = onUpdate(
+        shipsList,
+        starshipsList,
+        mass,
+        length,
+        id,
+        scoreShips,
+        maxShips
+      );
+
+      return {
+        shipsList: newArr,
+        scoreShips: newScore,
+        mass: newAttack,
+        length: newHealth,
+      };
     });
   };
 
@@ -144,8 +120,7 @@ export default class App extends Component {
       hasError,
     } = this.state;
 
-    const btnStatus = score === 0 && scoreShips === 0 ? false : true;
-    const titleStatus = btnStatus ? "Choose team and ship!" : null;
+    const btnDisabled = score === 0 && scoreShips === 0 ? false : true;
 
     if (hasError) {
       return <ErrorIndicator />;
@@ -185,8 +160,7 @@ export default class App extends Component {
       <MainPage
         attack={attack + mass}
         health={health + length}
-        titleStatus={titleStatus}
-        btnStatus={btnStatus}
+        btnStatus={btnDisabled}
         StarshipsPageItem={StarshipsPageItem}
         PeoplePageItem={PeoplePageItem}
       />

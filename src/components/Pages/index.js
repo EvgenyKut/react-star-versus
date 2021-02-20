@@ -1,7 +1,7 @@
-import MainPage from "./main-page";
-import PeoplePage from "./people-page";
-import BattlePage from "./battle-page";
-import WelcomePage from "./welcome-page";
-import StarshipsPage from "./starships-page";
+import MainPage from "./MainPage";
+import PeoplePage from "./PeoplePage";
+import BattlePage from "./BattlePage";
+import WelcomePage from "./WelcomePage";
+import StarshipsPage from "./StarshipsPage";
 
 export { BattlePage, WelcomePage, PeoplePage, StarshipsPage, MainPage };
